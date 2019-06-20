@@ -14,6 +14,32 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "paths": {
+      "@app/services": [
+        "src/app/_services"
+      ],
+      "@app/services/*": [
+        "src/app/_services/*"
+      ],
+      "@app/directives": [
+        "src/app/_directives"
+      ],
+      "@app/directives/*": [
+        "src/app/_directives/*"
+      ],
+      "@app/components": [
+        "src/app/_components"
+      ],
+      "@app/components/*": [
+        "src/app/_components/*"
+      ],
+      "@app/models": [
+        "src/app/_models"
+      ],
+      "@app/models/*": [
+        "src/app/_models/*"
+      ]
+    },
     "lib": [
       "es2018",
       "dom"

@@ -1,0 +1,42 @@
+<div [formGroup]="form">
+  <label [attr.for]="question.key">{{ question.label }}</label>
+
+  <div [ngSwitch]="question.controlType">
+
+    <input *ngSwitchCase="'textbox'"
+           [class]="isValid ? config.validClass : config.invalidClass"
+           [formControlName]="question.key"
+           [placeholder]="question.placeholder"
+           [id]="question.key"
+           [type]="question['type']">
+
+    <select [id]="question.key"
+            *ngSwitchCase="'dropdown'"
+            [class]="isValid ? config.validClass : config.invalidClass"
+            [formControlName]="question.key">
+      <option value=""
+              disabled
+              *ngIf="!!question.placeholder"
+              selected>{{ question.placeholder }}</option>
+      <option *ngFor="let opt of question['options']"
+              [value]="opt.key">{{ opt.value }}</option>
+    </select>
+
+    <textarea *ngSwitchCase="'textarea'"
+              [formControlName]="question.key"
+              [id]="question.key"
+              [class]="isValid ? config.validClass : config.invalidClass"
+              [cols]="question['cols']"
+              [rows]="question['rows']"
+              [maxlength]="question['maxlength']"
+              [minlength]="question['minlength']"
+              [placeholder]="question.placeholder"></textarea>
+
+    <button *ngIf="question.iterable"
+            type="button"
+            (click)="addItem(question)">+</button>
+  </div>
+
+  <div class="errorMessage"
+       *ngIf="!isValid">{{ question.label }} is required</div>
+</div>

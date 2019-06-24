@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import { QuestionBase } from '@app/models';
+import { isArray } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,21 @@ export class QuestionControlService {
 
       if (question.iterable) {
 
-        group[question.key] = question.required  ? new FormArray([new FormControl(question.value || '')
-        ]) : new FormArray([new FormControl(question.value || '')], Validators.required);
+        if (!Array.isArray(question.value)) {
+          question.value = !!question.value ? [question.value] : [''];
+        }
+
+        const tmpArray: FormArray = question.required ? new FormArray([]) : new FormArray([], Validators.required);
+
+        if (!question.value || !question.value.length) {
+          tmpArray.push(new FormControl(''));
+        } else {
+          question.value.forEach(val => {
+            tmpArray.push(new FormControl(val));
+          });
+        }
+
+        group[question.key] = tmpArray;
 
       } else {
 

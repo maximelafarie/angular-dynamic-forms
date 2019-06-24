@@ -1,42 +1,64 @@
 <div [formGroup]="form">
-  <label [attr.for]="question.key">{{ question.label }}</label>
 
-  <div [ngSwitch]="question.controlType">
+  <ng-template #formTmpl
+               let-field="field"
+               let-index="index">
+    <pre>index: {{ index }}</pre>
+    <label [attr.for]="!!question.iterable ? question.key + index : question.key">{{ question.label }}</label>
 
-    <input *ngSwitchCase="'textbox'"
-           [class]="isValid ? config.validClass : config.invalidClass"
-           [formControlName]="question.key"
-           [placeholder]="question.placeholder"
-           [id]="question.key"
-           [type]="question['type']">
+    <div [ngSwitch]="question.controlType">
 
-    <select [id]="question.key"
-            *ngSwitchCase="'dropdown'"
-            [class]="isValid ? config.validClass : config.invalidClass"
-            [formControlName]="question.key">
-      <option value=""
-              disabled
-              *ngIf="!!question.placeholder"
-              selected>{{ question.placeholder }}</option>
-      <option *ngFor="let opt of question['options']"
-              [value]="opt.key">{{ opt.value }}</option>
-    </select>
+      <div [attr.formArrayName]="!!question.iterable ? question.key : null">
+        <input *ngSwitchCase="'textbox'"
+               [class]="isValid ? config.validClass : config.invalidClass"
+               [formControlName]="!!question.iterable ? index : question.key"
+               [placeholder]="question.placeholder"
+               [id]="!!question.iterable ? question.key + index : question.key"
+               [type]="question['type']">
 
-    <textarea *ngSwitchCase="'textarea'"
-              [formControlName]="question.key"
-              [id]="question.key"
-              [class]="isValid ? config.validClass : config.invalidClass"
-              [cols]="question['cols']"
-              [rows]="question['rows']"
-              [maxlength]="question['maxlength']"
-              [minlength]="question['minlength']"
-              [placeholder]="question.placeholder"></textarea>
+        <select [id]="question.key"
+                *ngSwitchCase="'dropdown'"
+                [class]="isValid ? config.validClass : config.invalidClass"
+                [formControlName]="question.key">
+          <option value=""
+                  disabled
+                  *ngIf="!!question.placeholder"
+                  selected>{{ question.placeholder }}</option>
+          <option *ngFor="let opt of question['options']"
+                  [value]="opt.key">{{ opt.value }}</option>
+        </select>
 
-    <button *ngIf="question.iterable"
-            type="button"
-            (click)="addItem(question)">+</button>
+        <textarea *ngSwitchCase="'textarea'"
+                  [formControlName]="question.key"
+                  [id]="question.key"
+                  [class]="isValid ? config.validClass : config.invalidClass"
+                  [cols]="question['cols']"
+                  [rows]="question['rows']"
+                  [maxlength]="question['maxlength']"
+                  [minlength]="question['minlength']"
+                  [placeholder]="question.placeholder"></textarea>
+      </div>
+    </div>
+
+    <div class="errorMessage"
+         *ngIf="!isValid">{{ question.label }} is required</div>
+
+  </ng-template>
+
+  <div *ngIf="question.iterable; else formTmpl">
+    val {{questionArray.value | json}}
+    <div *ngFor="let field of questionArray.controls; let i=index; last as isLast">
+      <!-- <input [class]="isValid ? config.validClass : config.invalidClass"
+             [formControlName]="i"
+             [placeholder]="question.placeholder"
+             [id]="question.key"
+             [type]="question['type']"> -->
+      <ng-container [ngTemplateOutlet]="formTmpl"
+                    [ngTemplateOutletContext]="{field: field, index: i}"></ng-container>
+      <button *ngIf="question.iterable && isLast"
+              type="button"
+              (click)="addItem(question)">+</button>
+    </div>
   </div>
 
-  <div class="errorMessage"
-       *ngIf="!isValid">{{ question.label }} is required</div>
 </div>

@@ -42,7 +42,7 @@ export class QuestionService {
       new TextboxQuestion({
         key: 'jobs',
         label: 'Jobs',
-        value: '',
+        value: ['toto'],
         iterable: true,
         order: 5
       }),

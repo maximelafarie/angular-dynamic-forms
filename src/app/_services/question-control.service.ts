@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import { QuestionBase } from '@app/models';
-import { isArray } from 'util';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class QuestionControlService {
 
   constructor() { }

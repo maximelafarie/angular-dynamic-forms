@@ -6,3 +6,16 @@
 .bad {
   border-color: red !important;
 }
+
+textarea {
+  resize: vertical;
+}
+
+pre {
+  max-height: 40vh;
+  overflow: scroll;
+}
+
+button {
+  margin-right: 5px;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, VERSION } from '@angular/core';
 
 import { QuestionService } from '@app/services';
 
@@ -10,11 +10,10 @@ import { QuestionService } from '@app/services';
 export class AppComponent {
 
   questions: any[];
+  version = VERSION.full;
 
   constructor(service: QuestionService) {
     this.questions = service.getQuestions();
-
-    console.log(this.questions);
   }
 
 }

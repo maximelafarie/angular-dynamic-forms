@@ -14,10 +14,7 @@ import { QuestionService } from '@app/services';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DynamicFormModule.forRoot({
-      validClass: 'good',
-      invalidClass: 'bad'
-    })
+    DynamicFormModule
   ],
   providers: [QuestionService],
   bootstrap: [AppComponent]

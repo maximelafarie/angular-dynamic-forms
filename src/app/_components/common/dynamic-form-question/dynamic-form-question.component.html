@@ -1,42 +1,60 @@
 <div [formGroup]="form">
-  <label [attr.for]="question.key">{{ question.label }}</label>
 
-  <div [ngSwitch]="question.controlType">
+  <ng-template #formTmpl
+               let-index="index">
+    <label [attr.for]="questionId(index)">{{ questionLabel(index) }}</label>
 
-    <input *ngSwitchCase="'textbox'"
-           [class]="isValid ? config.validClass : config.invalidClass"
-           [formControlName]="question.key"
-           [placeholder]="question.placeholder"
-           [id]="question.key"
-           [type]="question['type']">
+    <div [ngSwitch]="question.controlType">
 
-    <select [id]="question.key"
-            *ngSwitchCase="'dropdown'"
-            [class]="isValid ? config.validClass : config.invalidClass"
-            [formControlName]="question.key">
-      <option value=""
-              disabled
-              *ngIf="!!question.placeholder"
-              selected>{{ question.placeholder }}</option>
-      <option *ngFor="let opt of question['options']"
-              [value]="opt.key">{{ opt.value }}</option>
-    </select>
+      <input *ngSwitchCase="'textbox'"
+             [formControl]="questionControl(index)"
+             [placeholder]="question.placeholder"
+             [attr.min]="question['min']"
+             [attr.max]="question['max']"
+             [attr.pattern]="question['pattern']"
+             [id]="questionId(index)"
+             [type]="question['type']">
 
-    <textarea *ngSwitchCase="'textarea'"
-              [formControlName]="question.key"
-              [id]="question.key"
-              [class]="isValid ? config.validClass : config.invalidClass"
-              [cols]="question['cols']"
-              [rows]="question['rows']"
-              [maxlength]="question['maxlength']"
-              [minlength]="question['minlength']"
-              [placeholder]="question.placeholder"></textarea>
+      <select [id]="question.key"
+              *ngSwitchCase="'dropdown'"
+              [formControl]="questionControl(index)">
+        <option value=""
+                disabled
+                *ngIf="!!question.placeholder"
+                selected>{{ question.placeholder }}</option>
+        <option *ngFor="let opt of question['options']"
+                [value]="opt.key">{{ opt.value }}</option>
+      </select>
 
-    <button *ngIf="question.iterable"
-            type="button"
-            (click)="addItem(question)">+</button>
+      <textarea *ngSwitchCase="'textarea'"
+                [formControl]="questionControl(index)"
+                [id]="question.key"
+                [cols]="question['cols']"
+                [rows]="question['rows']"
+                [maxlength]="question['maxlength']"
+                [minlength]="question['minlength']"
+                [placeholder]="question.placeholder"></textarea>
+    </div>
+
+    <div class="errorMessage"
+         *ngIf="!isValid">{{ question.label }} is required</div>
+
+  </ng-template>
+
+  <div *ngIf="question.iterable; else formTmpl">
+    <div *ngFor="let field of questionArray.controls; let i=index; first as isFirst last as isLast">
+      <ng-container [ngTemplateOutlet]="formTmpl"
+                    [ngTemplateOutletContext]="{index: i}"></ng-container>
+
+      <button *ngIf="question.iterable && questionArray.controls.length > 1"
+              (click)="removeQuestion(i)"
+              type="button">-</button>
+
+      <button *ngIf="question.iterable && isLast"
+              (click)="addQuestion()"
+              type="button">+</button>
+
+    </div>
   </div>
 
-  <div class="errorMessage"
-       *ngIf="!isValid">{{ question.label }} is required</div>
 </div>

@@ -7,9 +7,7 @@ import {
   TextareaQuestion
 } from '@app/models';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class QuestionService {
 
   // TODO: get from a remote source of question metadata
@@ -42,9 +40,19 @@ export class QuestionService {
       new TextboxQuestion({
         key: 'jobs',
         label: 'Jobs',
-        value: '',
+        value: ['toto'],
         iterable: true,
         order: 5
+      }),
+
+      new TextboxQuestion({
+        key: 'level',
+        label: 'Level',
+        type: 'range',
+        value: 70,
+        min: 20,
+        max: 200,
+        order: 6
       }),
 
       new TextboxQuestion({

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 
-import { QuestionBase, QuestionConfig } from '@app/models';
+import { QuestionBase } from '@app/models';
 
 @Component({
   selector: 'app-question',
@@ -12,22 +12,37 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   @Input() question: QuestionBase<any>;
   @Input() form: FormGroup;
-  @Input() config: QuestionConfig;
   get isValid() { return this.form.controls[this.question.key].valid; }
 
-  constructor() {
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit() { }
+
+  private asFormArray(ctrl: AbstractControl): FormArray {
+    return ctrl as FormArray;
   }
 
-  ngOnInit() {
-
-    if (this.question.iterable) {
-      console.log(this.question);
-    }
+  public addQuestion(): void {
+    this.questionArray.push(this.fb.control(''));
   }
 
-  public addItem(question: QuestionBase<any>): void {
-    (<FormArray> this.form.get(question.key)).push(new FormControl(''));
-    console.log(question);
+  public removeQuestion(index: number): void {
+    this.questionArray.removeAt(index);
   }
 
+  public get questionArray(): FormArray {
+    return this.form.get(this.question.key) as FormArray;
+  }
+
+  public questionControl(index?: number): AbstractControl {
+    return this.question.iterable ? this.asFormArray(this.form.get(this.question.key)).controls[index] : this.form.get(this.question.key);
+  }
+
+  public questionId(index?: number): string {
+    return this.question.iterable ? `${this.question.key}-${index}` : this.question.key;
+  }
+
+  public questionLabel(index?: number): string {
+    return this.question.iterable ? `${this.question.label} n°${index + 1}` : this.question.label;
+  }
 }

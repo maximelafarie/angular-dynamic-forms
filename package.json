@@ -1,13 +1,16 @@
 {
-  "name": "ngx-smart-form",
-  "version": "0.0.0",
+  "name": "angular-dynamic-forms",
+  "description": "Create on-the-fly forms with Angular",
+  "version": "1.0.0",
+  "author": "Maxime LAFARIE <maxime.lafarie@gmail.com>",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ghpages": "npm i && ng build --prod --aot --no-progress --base-href '/angular-dynamic-forms/'"
   },
   "private": true,
   "dependencies": {

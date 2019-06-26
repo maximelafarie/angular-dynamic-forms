@@ -34,15 +34,19 @@ export class DynamicFormQuestionComponent implements OnInit {
     return this.form.get(this.question.key) as FormArray;
   }
 
+  public get questionIsIterable(): boolean {
+    return !!this.question && this.question.iterable;
+  }
+
   public questionControl(index?: number): AbstractControl {
-    return this.question.iterable ? this.asFormArray(this.form.get(this.question.key)).controls[index] : this.form.get(this.question.key);
+    return this.questionIsIterable ? this.asFormArray(this.form.get(this.question.key)).controls[index] : this.form.get(this.question.key);
   }
 
   public questionId(index?: number): string {
-    return this.question.iterable ? `${this.question.key}-${index}` : this.question.key;
+    return this.questionIsIterable ? `${this.question.key}-${index}` : this.question.key;
   }
 
   public questionLabel(index?: number): string {
-    return this.question.iterable ? `${this.question.label} n°${index + 1}` : this.question.label;
+    return this.questionIsIterable ? `${this.question.label} n°${index + 1}` : this.question.label;
   }
 }

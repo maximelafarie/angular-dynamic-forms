@@ -11,19 +11,17 @@ language: node_js
 node_js:
   - stable
 before_install:
-  - npm i -g npm
-  - npm i -g live-server@1
-  - npm i -g node-gyp@3
+  - echo "$TRAVIS_BRANCH"
+  - echo "$TRAVIS_PULL_REQUEST"
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - export CHROME_BIN=chromium-browser
 install:
   - npm install
 script:
+  - npm run lint
   - npm run test
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
-after_success:
-  - npm run ghpages
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == false ]; then npm run ghpages; fi
 deploy:
   provider: pages
   skip_cleanup: true

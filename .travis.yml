@@ -25,7 +25,7 @@ script:
 deploy:
   provider: pages
   skip_cleanup: true
-  local_dir: dist
+  local_dir: dist/angular-dynamic-forms
   github_token: $PUSH_TOKEN
   on:
     branch: master

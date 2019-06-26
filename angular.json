@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-smart-form": {
+    "angular-dynamic-forms": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-smart-form",
+            "outputPath": "dist/angular-dynamic-forms",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-smart-form:build"
+            "browserTarget": "angular-dynamic-forms:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-smart-form:build:production"
+              "browserTarget": "angular-dynamic-forms:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-smart-form:build"
+            "browserTarget": "angular-dynamic-forms:build"
           }
         },
         "test": {
@@ -110,15 +110,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-smart-form:serve"
+            "devServerTarget": "angular-dynamic-forms:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-smart-form:serve:production"
+              "devServerTarget": "angular-dynamic-forms:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "ngx-smart-form"
+  "defaultProject": "angular-dynamic-forms"
 }

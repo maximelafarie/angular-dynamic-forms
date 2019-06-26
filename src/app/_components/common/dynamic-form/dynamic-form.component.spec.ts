@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DynamicFormComponent } from './dynamic-form.component';
+import { DynamicFormModule } from './dynamic-form.module';
 
 describe('DynamicFormComponent', () => {
   let component: DynamicFormComponent;
@@ -8,7 +9,7 @@ describe('DynamicFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DynamicFormComponent ]
+      imports: [ DynamicFormModule ]
     })
     .compileComponents();
   }));

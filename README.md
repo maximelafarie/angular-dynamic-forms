@@ -1,6 +1,9 @@
 [![Build Status](https://travis-ci.org/maximelafarie/angular-dynamic-forms.svg?branch=master)](https://travis-ci.org/maximelafarie/angular-dynamic-forms)
 
 # NgxSmartForm 
+
+**[Demo](https://maximelafarie.com/angular-dynamic-forms/)** • **[Post on Dev.to](https://dev.to/max/build-dynamic-angular-forms-on-the-fly-4n3m)**
+
 ## Build dynamic Angular forms on-the-fly
 
 The purpose of this project is to demonstrate the automation of creation of Angular forms with dynamic models.

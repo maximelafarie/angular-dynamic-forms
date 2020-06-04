@@ -1,12 +1,7 @@
 sudo: required
 dist: trusty
 addons:
-  apt:
-    update: true
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+  chrome: stable
 language: node_js
 node_js:
   - stable

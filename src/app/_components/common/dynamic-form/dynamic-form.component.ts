@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { QuestionBase } from '@app/models';
 import { QuestionControlService } from '@app/services';
@@ -12,7 +12,7 @@ import { QuestionControlService } from '@app/services';
 export class DynamicFormComponent implements OnInit {
 
   @Input() questions: QuestionBase<any>[] = [];
-  form: FormGroup;
+  form: UntypedFormGroup;
   payLoad = '';
 
   constructor(private qcs: QuestionControlService) { }

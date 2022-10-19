@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators, UntypedFormArray } from '@angular/forms';
 
 import { QuestionBase } from '@app/models';
 
@@ -19,13 +19,13 @@ export class QuestionControlService {
           question.value = !!question.value ? [question.value] : [''];
         }
 
-        const tmpArray: FormArray = question.required ? new FormArray([]) : new FormArray([], Validators.required);
+        const tmpArray: UntypedFormArray = question.required ? new UntypedFormArray([]) : new UntypedFormArray([], Validators.required);
 
         if (!question.value || !question.value.length) {
-          tmpArray.push(new FormControl(''));
+          tmpArray.push(new UntypedFormControl(''));
         } else {
           question.value.forEach(val => {
-            tmpArray.push(new FormControl(val));
+            tmpArray.push(new UntypedFormControl(val));
           });
         }
 
@@ -33,12 +33,12 @@ export class QuestionControlService {
 
       } else {
 
-        group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)
-          : new FormControl(question.value || '');
+        group[question.key] = question.required ? new UntypedFormControl(question.value || '', Validators.required)
+          : new UntypedFormControl(question.value || '');
 
       }
 
     });
-    return new FormGroup(group);
+    return new UntypedFormGroup(group);
   }
 }

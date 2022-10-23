@@ -11,4 +11,8 @@ describe('QuestionControlService', () => {
     const service: QuestionControlService = TestBed.get(QuestionControlService);
     expect(service).toBeTruthy();
   });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

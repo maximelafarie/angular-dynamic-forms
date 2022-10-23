@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DynamicFormQuestionComponent } from './dynamic-form-question.component';
 import { DynamicFormQuestionModule } from './dynamic-form-question.module';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 describe('DynamicFormQuestionComponent', () => {
   let component: DynamicFormQuestionComponent;
   let fixture: ComponentFixture<DynamicFormQuestionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [DynamicFormQuestionModule]
     })
@@ -20,8 +20,8 @@ describe('DynamicFormQuestionComponent', () => {
     component = fixture.componentInstance;
 
     // Mock form
-    component.form = new FormGroup({
-      firstName: new FormControl()
+    component.form = new UntypedFormGroup({
+      firstName: new UntypedFormControl()
     });
 
     // Mock question
@@ -41,5 +41,9 @@ describe('DynamicFormQuestionComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { UntypedFormGroup, UntypedFormArray, UntypedFormBuilder, AbstractControl } from '@angular/forms';
 
 import { QuestionBase } from '@app/models';
 
@@ -8,18 +8,16 @@ import { QuestionBase } from '@app/models';
   templateUrl: './dynamic-form-question.component.html',
   styleUrls: ['./dynamic-form-question.component.scss']
 })
-export class DynamicFormQuestionComponent implements OnInit {
+export class DynamicFormQuestionComponent {
 
   @Input() question: QuestionBase<any>;
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: UntypedFormBuilder) { }
 
-  ngOnInit() { }
-
-  private asFormArray(ctrl: AbstractControl): FormArray {
-    return ctrl as FormArray;
+  private asFormArray(ctrl: AbstractControl): UntypedFormArray {
+    return ctrl as UntypedFormArray;
   }
 
   public addQuestion(): void {
@@ -30,8 +28,8 @@ export class DynamicFormQuestionComponent implements OnInit {
     this.questionArray.removeAt(index);
   }
 
-  public get questionArray(): FormArray {
-    return this.form.get(this.question.key) as FormArray;
+  public get questionArray(): UntypedFormArray {
+    return this.form.get(this.question.key) as UntypedFormArray;
   }
 
   public get questionIsIterable(): boolean {
